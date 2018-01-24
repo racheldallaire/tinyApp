@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.post("/urls", (req, res) => {
 
 urlDatabase[generateRandomString()] = req.body.longURL;
-res.send(urlDatabase);
+res.redirect("/urls");
 
 });
 
@@ -61,15 +61,22 @@ app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
-app.post("/urls/:id/", (req, res) => {
+app.post("/urls/:id", (req, res) => {
   let shortURL = req.params.id;
   urlDatabase[shortURL] = req.body.longURL;
-  res.redirect('/urls/');
+  res.redirect('/urls');
 });
 
 app.post("/urls/:id/delete", (req, res) => {
   let shortURL = req.params.id;
     delete urlDatabase[shortURL];
+    res.redirect('/urls');
+});
+
+app.post("/login", (req, res) => {
+  let username = req.params.id;
+
+    res.cookie(username, req.body.username)
     res.redirect('/urls');
 });
 
