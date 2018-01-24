@@ -1,9 +1,17 @@
 <meta charset='utf-8'>
 <title>TinyApp 🐙</title>
 
+<% if (user) { %>
+
+<h1><%= "Welcome, " + user + "."  %></h1>
+
+<% } else { %>
+
 <form action="/login" method="POST">
       <label for="user">Username:</label>
       <input id="user" type="text" name="username" style="width: 100px">
       <input type="submit" value="Sign in"><p>
       </p>
     </form>
+
+<% } %>
