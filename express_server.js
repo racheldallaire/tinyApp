@@ -54,12 +54,21 @@ app.get("/", (req, res) => {
   res.end("Hello!");
 });
 
-app.get("/hello", (req, res) => {
-  res.end("<html><body>Hello <b>World</b></body></html>\n");
-});
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
+});
+
+app.post("/urls/:id/", (req, res) => {
+  const newLongURL = req.body.update;
+  const shortURL = req.params.id;
+  const urls = urlDatabase;
+});
+
+app.post("/urls/:id/delete", (req, res) => {
+  const shortURL = req.params.id;
+    delete urlDatabase[shortURL];
+    res.redirect('/urls');
 });
 
 app.listen(PORT, () => {

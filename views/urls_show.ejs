@@ -4,7 +4,11 @@
   <% include ./partials/_header %>
 </head>
 <body>
-    Full URL: <%= fullURL %> <br>
-    Shortened version: <%= shortURL %>
+    <h1>ShortURL: <i><%= shortURL %></i></h1>
+    <form method="POST" action="/urls/<%= shortURL %>">
+        <label for="longURL">Enter a New URL:</label>
+        <input id="longURL" type="text" name="update" placeholder="http://" style="width: 300px">
+        <input type="submit" value="update">
+     </form>
 </body>
 </html>

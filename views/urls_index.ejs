@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <% include ./partials/_header %>
 </head>
 <body>
-    <div class="table">
-      <b>Transformed URLs:</b>
+  <% include ./partials/_header %>
+      <h2>Transformed URLs:</h2>
+
       <ul style="list-style-type:circle">
       <% for (var key in urls) { %>
-      <li><%= key + ": " + urls[key] + " " %><a href="/urls/<%= key %>">Shorten</a></li>
-      <% } %><p>
-        <a href="/urls/new">This is a form</a>
+      <li><%= key + " ➟ " %>
+
+        <a href="<%= urls[key] %>"><%= urls[key] %></a>
+
+        <form style="display: inline-block" method="POST" action="/urls/<%= key %>/delete">
+
+        <button type="submit" value="remove" name="delete">✘</button>
+
+      </form>
+
+        <button><a href="/urls/<%= key %>">Update</button></a>
+
+    </li>
+
+      <p>
+
+      <% } %>
+
+      <button><a href="/urls/new">Create New URL</a></button>
+
       </p>
     </ul>
-    </div>
     </p>
 </body>
 </html>
