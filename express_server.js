@@ -1,3 +1,5 @@
+//Required frameworks and packages
+
 var express = require("express");
 var cookieParser = require('cookie-parser');
 var bodyParser = require("body-parser");
@@ -10,12 +12,18 @@ app.set("view engine", "ejs");
 
 app.use(express.static('public'));
 
-var PORT = process.env.PORT || 8080; // default port 8080
+//Setting port to default
+
+var PORT = process.env.PORT || 8080;
+
+//Object containing all short and long versions of URLs
 
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
+//Function to generate 6 digit alphanumeric string, used to generate short URLs
 
 function generateRandomString() {
 
@@ -26,6 +34,8 @@ function generateRandomString() {
   }
 return random;
 }
+
+//GET methods
 
 app.get("/", (req, res) => {
   res.end("Hello!");
@@ -63,11 +73,17 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
-app.post("/urls", (req, res) => {
+app.get("/register", (req, res) => {
+  let user_id = req.cookies["username"];
+  let templateVars = { user: user_id }
+  res.render(templateVars);
+});
 
+//POST methods
+
+app.post("/urls", (req, res) => {
 urlDatabase[generateRandomString()] = req.body.longURL;
 res.redirect("/urls");
-
 });
 
 app.post("/urls/:id", (req, res) => {
@@ -95,6 +111,8 @@ app.post("/logout", (req, res) => {
     res.clearCookie('username', user);
     res.redirect('/urls');
 });
+
+//Console output for user
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
