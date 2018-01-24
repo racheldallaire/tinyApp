@@ -5,9 +5,9 @@
 </head>
 <body>
     <h1>ShortURL: <i><%= shortURL %></i></h1>
-    <form method="POST" action="/urls/<%= shortURL %>">
-        <label for="longURL">Enter a New URL:</label>
-        <input id="longURL" type="text" name="update" placeholder="http://" style="width: 300px">
+    <form action="/urls/<%= shortURL %>" method="POST">
+        <label for="longURL">Update URL:</label>
+        <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
         <input type="submit" value="update">
      </form>
 </body>

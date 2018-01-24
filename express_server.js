@@ -27,7 +27,9 @@ res.send(urlDatabase);
 
 });
 
-app.set("view engine", "ejs")
+app.set("view engine", "ejs");
+
+app.use(express.static('public'));
 
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
@@ -60,13 +62,13 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.post("/urls/:id/", (req, res) => {
-  const newLongURL = req.body.update;
-  const shortURL = req.params.id;
-  const urls = urlDatabase;
+  let shortURL = req.params.id;
+  urlDatabase[shortURL] = req.body.longURL;
+  res.redirect('/urls/');
 });
 
 app.post("/urls/:id/delete", (req, res) => {
-  const shortURL = req.params.id;
+  let shortURL = req.params.id;
     delete urlDatabase[shortURL];
     res.redirect('/urls');
 });

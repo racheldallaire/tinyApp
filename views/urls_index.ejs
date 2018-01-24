@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <% include ./partials/_header %>
@@ -9,8 +10,9 @@
       <ul style="list-style-type:circle">
       <% for (var key in urls) { %>
       <li><%= key + " ➟ " %>
-
         <a href="<%= urls[key] %>"><%= urls[key] %></a>
+
+        <button><a href="/urls/<%= key %>">Edit</button></a>
 
         <form style="display: inline-block" method="POST" action="/urls/<%= key %>/delete">
 
@@ -18,7 +20,6 @@
 
       </form>
 
-        <button><a href="/urls/<%= key %>">Update</button></a>
 
     </li>
 
