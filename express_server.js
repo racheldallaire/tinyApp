@@ -51,7 +51,7 @@ return random;
 //GET methods
 
 app.get("/", (req, res) => {
-  res.end("Hello!");
+  res.redirect("/urls");
 });
 
 app.get("/urls", (req, res) => {

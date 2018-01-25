@@ -1,23 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme=code>
 <head>
-  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <link href=http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,600,700,900 rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic,900,900italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic rel=stylesheet>
+  <link href=http://staticresource.com/basic.css rel=stylesheet>
+  <link href=http://staticresource.com/data-buttons.css rel=stylesheet>
 </head>
 <body>
   <% include ./partials/_header %>
+    <div align = center>
+      <h1>Transformed URLs</h1>
 
-      <h2>Transformed URLs:</h2>
-
-      <ul style="list-style-type:circle">
+      <ul style="list-style-type:none">
       <% for (var key in urls) { %>
-      <li><%= key + " ➟ " %>
+      <li><code><%= key %></code>
+      <%= " ➟ " %>
         <a href="<%= urls[key] %>"><%= urls[key] %></a>
 
-        <button><a href="/urls/<%= key %>">Edit</button></a>
+        <a href="/urls/<%= key %>"><code>Edit</code></button></a>
 
         <form style="display: inline-block" method="POST" action="/urls/<%= key %>/delete">
 
-        <button type="submit" value="remove" name="delete">✘</button>
+        <button data-button="outline" type="submit" value="remove" name="delete">✘</button>
 
       </form>
 
@@ -28,8 +35,8 @@
 
       <% } %>
 
-      <button><a href="/urls/new">Create New URL</a></button>
-
+      <button data-button="outline"><a href="/urls/new">Create New URL</a></button>
+      </div>
       </p>
     </ul>
     </p>

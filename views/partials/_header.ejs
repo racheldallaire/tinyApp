@@ -5,12 +5,12 @@
 
 <% if (user) { %>
 
-<h3><%= "Welcome, " + user + "."  %>
-
-<form style="display: inline-block" action="/logout" method="POST">
-      <input type="submit" value="Logout"><p>
+<div align="right"><form style="display: inline-block" action="/logout" method="POST">
+      <input type="submit" data-button="outline" value="Logout"><p>
       </p>
-    </form></h3>
+    </form></div>
+
+<h3><%= "Welcome, " + user + "."  %></h3>
 
 <% } else { %>
 

@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head></head>
+<html lang="en" data-theme="code">
+  <head>
+    <link href=http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,600,700,900 rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic,900,900italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic rel=stylesheet>
+  <link href=http://staticresource.com/basic.css rel=stylesheet>
+  <link href=http://staticresource.com/data-buttons.css rel=stylesheet></head>
   <body>
     <% include partials/_header %>
 
     <form action="/urls" method="POST">
-      <label for="longURL"><h2>Enter a URL:</h2></label><p>
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-      <input type="submit" value="Submit">
+      <label for="longURL"><h1>Enter a URL:</h1></label><p>
+      <div align="center"><input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px"><p>
+      <input type="submit" data-button="outline" value="Submit"></div></p>
     </form>
   </body>
 </html>

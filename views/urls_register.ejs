@@ -1,19 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head></head>
+<html lang="en" data-theme="code">
+  <head>
+     <link href=http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic,500italic,700italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,600,700,900 rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic,900,900italic rel=stylesheet>
+  <link href=http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic rel=stylesheet>
+  <link href=http://staticresource.com/basic.css rel=stylesheet>
+  <link href=http://staticresource.com/data-buttons.css rel=stylesheet>
+  </head>
   <body>
 
 
     <h1>Create a New Account</h1>
-
+<div align="center">
     <form style="display: inline-block" action="/register" method="POST">
-      <label for="email">Email:</label>
-      <input id="email" type="email" name="email" style="width: 300px"><p>
+      <label for="email"><code>Email:</code></label>
+      <input id="email" type="email" style="width: 300px" name="email"><p>
 
 
-      <label for="password">Password:</label>
-      <input id="password" type="password" name="password" style="width: 200px"><p>
-      <input type="submit" value="Register">
+      <label for="password"><code>Password:</code></label>
+      <input id="password" type="password" style="width: 200px" name="password"><p>
+      <input type="submit" data-button="outline" value="Register">
     </form>
+  </div>
   </body>
 </html>
