@@ -23,6 +23,31 @@ var urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+/*
+
+var urlDatabase = {
+  "b2xVn2" {
+  shortURL: b2xVn2
+  longURL: http://www.lighthouselabs.ca
+  userID: LiamTheChampion
+  views: 0
+  uniqueVisits: 0
+  createdAt: new Date();
+  },
+
+  "9sm5xK": {
+  shortURL: 9sm5xK
+  longURL: http://www.google.com
+  userID: rachie.dxo
+  views: 0
+  uniqueVisits: 0
+  createdAt: newDate(),
+  }
+
+}
+
+*/
+
 const users = {
   "LiamTheChampion": {
     id: "LiamTheChampion",
@@ -118,22 +143,19 @@ app.post("/urls/:id/delete", (req, res) => {
 app.post("/login", (req, res) => {
   let emaily = req.body.email;
   let passwordy = req.body.password;
+  let flag = true;
 
 for(let userid in users) {
-  if(users[userid].email === emaily) {
-    if(users[userid].password === passwordy) {
-
+  if(users[userid].email === emaily && users[userid].password === passwordy) {
       res.cookie('user_id', users[userid].id);
-    res.redirect('/urls');
-    } else if (users[userid].password !== passwordy) {
-      res.status(403).send("Incorrect password.");
+      res.redirect('/urls');
+      flag = false;
     }
-}
-
-if(users[userid].email !== emaily) {
-    res.status(403).send("There is no account associated with this email.");
   }
-}
+
+  if (flag) {
+      res.status(403).send("Incorrect login details.");
+    }
 
 });
 
