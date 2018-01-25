@@ -23,6 +23,19 @@ var urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+const users = {
+  "userRandomID": {
+    id: "LiamTheChampion",
+    email: "liam@example.com",
+    password: "baseball-123"
+  },
+  "user2RandomID": {
+    id: "rachie.dxo",
+    email: "rachie@example.com",
+    password: "chococoffee-23"
+  },
+};
+
 //Function to generate 6 digit alphanumeric string, used to generate short URLs
 
 function generateRandomString() {
@@ -111,9 +124,17 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;
+  let userid = generateRandomString();
+  let emaily = req.body.email;
+  let passwordy = req.body.password;
 
+  users[userid] = {
+    id: userid,
+    email: emaily,
+    password: passwordy
+  };
+
+    res.cookie('user_id', userid);
     res.redirect('/urls');
 });
 
