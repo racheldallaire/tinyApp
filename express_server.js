@@ -24,12 +24,12 @@ var urlDatabase = {
 };
 
 const users = {
-  "userRandomID": {
+  "LiamTheChampion": {
     id: "LiamTheChampion",
     email: "liam@example.com",
     password: "baseball-123"
   },
-  "user2RandomID": {
+  "rachie.dxo": {
     id: "rachie.dxo",
     email: "rachie@example.com",
     password: "chococoffee-23"
@@ -56,8 +56,9 @@ app.get("/", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let user_id = req.cookies["user_id"];
-  let templateVars = { urls: urlDatabase, user: users[user_id] };
-  console.log(templateVars);
+
+  let templateVars = { urls: urlDatabase, user: users[user_id]};
+  console.log(users[user_id]);
   res.render("urls_index", templateVars);
 });
 
@@ -67,13 +68,13 @@ app.get("/urls.json", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
   let user_id = req.cookies["user_id"];
-  let templateVars = { user: users }
+  let templateVars = { user: users[user_id] };
   res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:id", (req, res) => {
   let user_id = req.cookies["user_id"];
-  let templateVars = { shortURL: req.params.id, fullURL: urlDatabase[req.params.id], user: users };
+  let templateVars = { shortURL: req.params.id, fullURL: urlDatabase[req.params.id], user: users[user_id] };
   res.render("urls_show", templateVars);
 });
 
@@ -81,7 +82,7 @@ app.get("/u/:shortURL", (req, res) => {
   let short = req.params.shortURL;
   let longURL = urlDatabase[short];
   let user_id = req.cookies["user_id"];
-  let templateVars = { user: users };
+  let templateVars = { user: users[user_id] };
 
   res.render(templateVars);
   res.redirect(longURL);
@@ -143,7 +144,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  let userid = generateRandomString();
+  let newid = generateRandomString();
   let emaily = req.body.email;
   let passwordy = req.body.password;
 
@@ -154,16 +155,19 @@ for(let userid in users) {
   if(users[userid].email === emaily) {
     res.status(400).send('There is already an account associated with this email address.');
   }
-}
-
-  users[userid] = {
-    id: userid,
+  else {
+  users[newid] = {
+    id: newid,
     email: emaily,
     password: passwordy
   };
 
-    res.cookie('user_id', userid);
+    res.cookie('user_id', newid);
     res.redirect('/urls');
+    console.log(users);
+  }
+}
+
 });
 
 //Console output for user
