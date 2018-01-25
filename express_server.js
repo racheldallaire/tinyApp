@@ -83,7 +83,6 @@ app.get("/urls", (req, res) => {
   let user_id = req.cookies["user_id"];
 
   let templateVars = { urls: urlDatabase, user: users[user_id]};
-  console.log(users[user_id]);
   res.render("urls_index", templateVars);
 });
 
@@ -169,25 +168,31 @@ app.post("/register", (req, res) => {
   let newid = generateRandomString();
   let emaily = req.body.email;
   let passwordy = req.body.password;
+  let errorMessage = '';
 
 if(emaily === '' || passwordy === '') {
-  res.status(400).send('Please enter a valid email/password');
+  errorMessage = 'Please enter a valid email/password.';
   }
+
 for(let userid in users) {
+  console.log("emails", users[userid].email, emaily);
   if(users[userid].email === emaily) {
-    res.status(400).send('There is already an account associated with this email address.');
+    errorMessage = 'There is already an account associated with this email address.';
   }
-  else {
+}
+if (!errorMessage) {
   users[newid] = {
     id: newid,
     email: emaily,
     password: passwordy
   };
-
+  console.log('errorMessage')
     res.cookie('user_id', newid);
     res.redirect('/urls');
-    console.log(users);
-  }
+
+}
+else {
+  res.status(400).send(errorMessage);
 }
 
 });
