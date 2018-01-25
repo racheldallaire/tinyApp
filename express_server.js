@@ -74,9 +74,7 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  let user_id = req.cookies["username"];
-  let templateVars = { user: user_id }
-  res.render(templateVars);
+  res.render("urls_register");
 });
 
 //POST methods
@@ -109,6 +107,13 @@ app.post("/logout", (req, res) => {
   let user = req.body.username;
 
     res.clearCookie('username', user);
+    res.redirect('/urls');
+});
+
+app.post("/register", (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+
     res.redirect('/urls');
 });
 
