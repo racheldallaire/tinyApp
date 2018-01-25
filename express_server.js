@@ -55,8 +55,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  let user_id = req.cookies["username"];
-  let templateVars = { urls: urlDatabase, user: user_id };
+  let user_id = req.cookies["user_id"];
+  let templateVars = { urls: urlDatabase, user: users[user_id] };
+  console.log(templateVars);
   res.render("urls_index", templateVars);
 });
 
@@ -65,22 +66,22 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  let user_id = req.cookies["username"];
-  let templateVars = { user: user_id }
+  let user_id = req.cookies["user_id"];
+  let templateVars = { user: users }
   res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:id", (req, res) => {
-  let user_id = req.cookies["username"];
-  let templateVars = { shortURL: req.params.id, fullURL: urlDatabase[req.params.id], user: user_id };
+  let user_id = req.cookies["user_id"];
+  let templateVars = { shortURL: req.params.id, fullURL: urlDatabase[req.params.id], user: users };
   res.render("urls_show", templateVars);
 });
 
 app.get("/u/:shortURL", (req, res) => {
   let short = req.params.shortURL;
   let longURL = urlDatabase[short];
-  let user_id = req.cookies["username"];
-  let templateVars = { user: user_id }
+  let user_id = req.cookies["user_id"];
+  let templateVars = { user: users };
 
   res.render(templateVars);
   res.redirect(longURL);
@@ -88,6 +89,10 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.get("/register", (req, res) => {
   res.render("urls_register");
+});
+
+app.get("/login", (req, res) => {
+  res.render("urls_login");
 });
 
 //POST methods
@@ -110,16 +115,30 @@ app.post("/urls/:id/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  let user = req.body.username;
+  let emaily = req.body.email;
+  let passwordy = req.body.password;
 
-    res.cookie('username', user);
+for(let userid in users) {
+  if(users[userid].email === emaily) {
+    if(users[userid].password === passwordy) {
+
+      res.cookie('user_id', users[userid].id);
     res.redirect('/urls');
+    } else if (users[userid].password !== passwordy) {
+      res.status(403).send("Incorrect password.");
+    }
+}
+
+if(users[userid].email !== emaily) {
+    res.status(403).send("There is no account associated with this email.");
+  }
+}
+
 });
 
 app.post("/logout", (req, res) => {
-  let user = req.body.username;
 
-    res.clearCookie('username', user);
+    res.clearCookie('user_id');
     res.redirect('/urls');
 });
 

@@ -6,19 +6,20 @@
 <% if (user) { %>
 
 <div align="right"><form style="display: inline-block" action="/logout" method="POST">
-      <input type="submit" data-button="outline" value="Logout"><p>
-      </p>
+      <input type="submit" data-button="outline" value="Logout">
     </form></div>
 
-<h3><%= "Welcome, " + user + "."  %></h3>
+<h3><%= "Welcome, " + user['email'] + "."  %></h3>
 
 <% } else { %>
 
-<form action="/login" method="POST">
-      <label for="user">Username:</label>
-      <input id="user" type="text" name="username" style="width: 100px">
-      <input type="submit" value="Sign in"><p>
-      </p>
+<div align="right"><form style="display: inline-block" action="/login" method="GET">
+      <input type="submit" data-button="outline" value="Log in">
     </form>
+    <form style="display: inline-block" action="/register" method="GET">
+      <input type="submit" data-button="outline" value="Register">
+    </form>
+
+  </div>
 
 <% } %>
