@@ -128,6 +128,15 @@ app.post("/register", (req, res) => {
   let emaily = req.body.email;
   let passwordy = req.body.password;
 
+if(emaily === '' || passwordy === '') {
+  res.status(400).send('Please enter a valid email/password');
+  }
+for(let userid in users) {
+  if(users[userid].email === emaily) {
+    res.status(400).send('There is already an account associated with this email address.');
+  }
+}
+
   users[userid] = {
     id: userid,
     email: emaily,
