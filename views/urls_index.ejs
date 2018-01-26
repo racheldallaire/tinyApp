@@ -18,7 +18,7 @@
       <% for (var key in urls) { %>
       <li><code><%= key %></code>
       <%= " ➟ " %>
-        <a href="<%= urls[key] %>"><%= urls[key] %></a>
+        <a href="<%= urls[key].shortURL %>"><%= urls[key].longURL %></a>
 
         <a href="/urls/<%= key %>"><code>Edit</code></button></a>
 
