@@ -16,9 +16,9 @@
 
       <ul style="list-style-type:none">
       <% for (var key in urls) { %>
-      <li><code><%= key %></code>
+      <li><code><a href="/u/<%= key %>"><%= key %></code></a>
       <%= " ➟ " %>
-        <a href="<%= urls[key].shortURL %>"><%= urls[key].longURL %></a>
+        <a href="<%= urls[key] %>"><%= urls[key] %></a>
 
         <a href="/urls/<%= key %>"><code>Edit</code></button></a>
 

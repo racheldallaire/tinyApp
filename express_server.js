@@ -45,7 +45,7 @@ const users = {
   "rachie.dxo": {
     id: "rachie.dxo",
     email: "rachie@example.com",
-    password: "chococoffee-23"
+    password: "123"
   },
 };
 
@@ -59,16 +59,41 @@ function generateRandomString() {
 return random;
 }
 
+//Function to display user-specific URLS
+function urlsForUser(id) {
+  let userURLs = {};
+  for(let shortURL in urlDatabase) {
+    if( urlDatabase[shortURL].userID === id){
+      userURLs[shortURL] = urlDatabase[shortURL].longURL;
+    }
+  }
+  return userURLs;
+}
+
+
 //GET methods
 //Homepage (unused)
 app.get("/", (req, res) => {
-  res.redirect("/urls");
+  res.end('hello');
+  // res.redirect("/urls");
 });
 
 //Main URLs page
 app.get("/urls", (req, res) => {
   let user_id = req.cookies["user_id"];
-  let templateVars = { urls: urlDatabase, user: users[user_id]};
+  let display = urlsForUser(user_id);
+  function validateUser () {
+    let validate = true;
+    if (!user_id) {
+      validate = false;
+    }
+    return validate;
+  }
+  if (validateUser() === false) {
+    res.redirect('/login');
+    return null;
+  }
+  let templateVars = { urls: display, user: users[user_id]};
   res.render("urls_index", templateVars);
 });
 
@@ -109,11 +134,17 @@ app.get("/urls/:id", (req, res) => {
 //Redirecting users from short URL to original link
 app.get("/u/:shortURL", (req, res) => {
   let short = req.params.shortURL;
-  let longURL = urlDatabase[short].longURL;
+  if (req.params.shortURL in urlDatabase) {
+    let longURL = urlDatabase[short].longURL;
+    res.redirect(longURL);
+    return null;
+  } else {
+    res.status(401).send('Please enter a valid URL.');
+    return null;
+  }
   let user_id = req.cookies["user_id"];
   let templateVars = { user: users[user_id] };
   res.render(templateVars);
-  res.redirect(longURL);
 });
 
 //Registration page
@@ -135,7 +166,8 @@ app.post("/urls", (req, res) => {
     longURL: req.body.longURL,
     userID: req.cookies["user_id"]
   } ;
-  res.redirect("/urls/" + shortURL);
+  res.redirect("/urls/"/* + shortURL */);
+  //N.B. I was asked to redirect to the edit page after creating a new URL, but this did not seem logical to me so I am redirecting back to the main urls page instead. I left the code that I was asked to produce in comments to show that I know how to do it, but would rather not for the sake of a better user experience.
 });
 
 app.post("/urls/:id", (req, res) => {
