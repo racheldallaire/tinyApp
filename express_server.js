@@ -81,7 +81,6 @@ app.get("/", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let user_id = req.cookies["user_id"];
-
   let templateVars = { urls: urlDatabase, user: users[user_id]};
   res.render("urls_index", templateVars);
 });
@@ -92,6 +91,17 @@ app.get("/urls.json", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
   let user_id = req.cookies["user_id"];
+  function validateUser () {
+  let validate = true;
+      if (!user_id) {
+        validate = false;
+       }
+  return validate;
+  }
+  if (validateUser() === false) {
+    res.redirect('/login');
+    return null;
+  }
   let templateVars = { user: users[user_id] };
   res.render("urls_new", templateVars);
 });
@@ -175,7 +185,6 @@ if(emaily === '' || passwordy === '') {
   }
 
 for(let userid in users) {
-  console.log("emails", users[userid].email, emaily);
   if(users[userid].email === emaily) {
     errorMessage = 'There is already an account associated with this email address.';
   }
@@ -186,10 +195,8 @@ if (!errorMessage) {
     email: emaily,
     password: passwordy
   };
-  console.log('errorMessage')
     res.cookie('user_id', newid);
     res.redirect('/urls');
-
 }
 else {
   res.status(400).send(errorMessage);
