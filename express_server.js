@@ -99,11 +99,7 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   let user_id = req.cookies["user_id"];
   let templateVars = { shortURL: req.params.id, fullURL: urlDatabase[req.params.id].longURL, user: users[user_id] };
-  //enter a shorturl. check which user the id belongs to. if it is the current logged in user, let them edit it. if not, return an error message.
-  function userURLs (shortURL) {
-    //ADD STUFF HERE
-  }
-  if (validateUser() === false) {
+  if(urlDatabase[req.params.id].userID !== user_id) {
     res.status(400).send('You cannot edit a URL you did not create.');
     return null;
   }
@@ -150,6 +146,11 @@ app.post("/urls/:id", (req, res) => {
 
 app.post("/urls/:id/delete", (req, res) => {
   let shortURL = req.params.id;
+  let user_id = req.cookies["user_id"];
+  if(urlDatabase[shortURL].userID !== user_id) {
+    res.status(400).send('You cannot delete a URL you did not create.');
+    return null;
+  }
   delete urlDatabase[shortURL];
   res.redirect('/urls');
 });
