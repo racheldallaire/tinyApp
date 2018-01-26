@@ -209,9 +209,11 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+  const bcrypt = require('bcrypt');
   let newid = generateRandomString();
   let emaily = req.body.email;
   let passwordy = req.body.password;
+  let hashedPassword  = bcrypt.hashSync(passwordy, 10);
   let errorMessage = '';
   if(emaily === '' || passwordy === '') {
     errorMessage = 'Please enter a valid email/password.';
@@ -225,8 +227,9 @@ app.post("/register", (req, res) => {
     users[newid] = {
     id: newid,
     email: emaily,
-    password: passwordy
+    password: hashedPassword
   };
+  console.log(users);
   res.cookie('user_id', newid);
   res.redirect('/urls');
   } else {
