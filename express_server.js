@@ -1,7 +1,9 @@
 //Required frameworks and packages
-var express = require("express");
-var cookieParser = require('cookie-parser');
-var bodyParser = require("body-parser");
+const express = require("express");
+const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser'); //DELETE THIS LATER
+const bodyParser = require("body-parser");
+const bcrypt = require('bcrypt');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -82,14 +84,7 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let user_id = req.cookies["user_id"];
   let display = urlsForUser(user_id);
-  function validateUser () {
-    let validate = true;
-    if (!user_id) {
-      validate = false;
-    }
-    return validate;
-  }
-  if (validateUser() === false) {
+  if (!user_id) {
     res.redirect('/login');
     return null;
   }
@@ -154,6 +149,12 @@ app.get("/register", (req, res) => {
 
 //Login page
 app.get("/login", (req, res) => {
+  let user_id = req.cookies["user_id"];
+  let display = urlsForUser(user_id);
+  if (user_id) {
+    res.redirect('/urls');
+    return null;
+  }
   res.render("urls_login");
 });
 
@@ -192,7 +193,7 @@ app.post("/login", (req, res) => {
   let passwordy = req.body.password;
   let flag = true;
 for(let userid in users) {
-  if(users[userid].email === emaily && users[userid].password === passwordy) {
+  if(users[userid].email === emaily && bcrypt.compareSync(passwordy, users[userid].password)) {
     res.cookie('user_id', users[userid].id);
     res.redirect('/urls');
     flag = false;
@@ -209,7 +210,6 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const bcrypt = require('bcrypt');
   let newid = generateRandomString();
   let emaily = req.body.email;
   let passwordy = req.body.password;
@@ -229,7 +229,6 @@ app.post("/register", (req, res) => {
     email: emaily,
     password: hashedPassword
   };
-  console.log(users);
   res.cookie('user_id', newid);
   res.redirect('/urls');
   } else {
