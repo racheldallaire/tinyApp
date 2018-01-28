@@ -11,7 +11,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
   name: 'session',
-  keys: ['Go buy a chopper and have a doctor on speed dial I guess - M.A.A.d city'],
+  keys: ['Go buy a chopper and have a doctor on speed dial I guess - M.A.A.d city'], //custom key
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 
@@ -48,8 +48,7 @@ function urlsForUser(id) {
 //GET methods
 //Homepage (unused)
 app.get("/", (req, res) => {
-  res.end('hello');
-  // res.redirect("/urls");
+  res.redirect("/urls");
 });
 
 //Main URLs page
@@ -139,8 +138,7 @@ app.post("/urls", (req, res) => {
     longURL: req.body.longURL,
     userID: req.session.user_id
   } ;
-  res.redirect("/urls/"/* + shortURL */);
-  //N.B. I was asked to redirect to the edit page after creating a new URL, but this did not seem logical to me so I am redirecting back to the main urls page instead. I left the code that I was asked to produce in comments to show that I know how to do it, but would rather not for the sake of a better user experience.
+  res.redirect("/urls/" + shortURL);
 });
 
 app.post("/urls/:id", (req, res) => {
