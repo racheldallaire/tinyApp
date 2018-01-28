@@ -4,8 +4,10 @@ TinyApp is a full-stack web application built with Node and express that allows 
 
 ## Final Product
 
-!["Login Page"](https://github.com/rachie-dxo/tinyApp-server/blob/master/docs/urls-login.png)
-!["Main URLs page (follow me on Instagram :wink:)"](https://github.com/rachie-dxo/tinyApp-server/blob/master/docs/urls-main.png)
+!["Screenshot of login page"](https://github.com/rachie-dxo/tinyApp-server/blob/master/docs/urls-login.png)
+> Login page
+!["Screenshot of home page"](https://github.com/rachie-dxo/tinyApp-server/blob/master/docs/urls-main.png)
+> Main URLs page (follow me on Instagram :wink:)
 
 ## Dependencies
 
